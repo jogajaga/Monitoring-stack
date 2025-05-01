@@ -100,6 +100,14 @@ services:
       options:
         max-size: "5m"
         max-file: "2"
+  stress:
+    image: progrium/stress
+    container_name: stress
+    command: ["--cpu", "8", "--vm", "3", "--vm-bytes", "1G", "--timeout", "300"]
+    profiles:
+      - stress-test
+    networks:
+      - devops-net
 
 networks:
   devops-net:
