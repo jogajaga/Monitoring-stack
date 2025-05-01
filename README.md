@@ -15,6 +15,7 @@
     - Настройка алертов по CPU и Memory Usage.
     - Уведомления о событиях в Телеграм через Grafana.
     - Быстрый запуск всей инфраструктуры через Docker-Compose.
+    - Стресс тест для контейнеров.
 
     ## Launch of the project:
 
@@ -22,3 +23,8 @@
 
     git clone https://github.com/jogajaga/Monitoring-stack.git
     cd Devops-project
+    docker-compose up -d
+
+    2. Запуск стресс теста:
+    
+    docker-compose --profile stress-test up stress
