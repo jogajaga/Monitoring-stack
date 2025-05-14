@@ -5,9 +5,6 @@
     - Prometheus - сбор метрик контейнеров и сервисов.
     - Grafana - визуализация, дашборды и настройка алертов.
     - cAdvisor - сбор метрик контейнеров Docker.
-    - PostgreSQL- тестовая база данных.
-    - Adminer - веб-интерфейс для работы с базами данных.
-    - Nginx - тестовый веб-сервер.
 
     ## Capabillities:
 
@@ -22,7 +19,7 @@
     1. Клонировать репозиторий:
 
     git clone https://github.com/jogajaga/Monitoring-stack.git
-    cd Devops-project
+    cd Monitoring-stack
     docker-compose up -d
 
     2. Запуск стресс теста:

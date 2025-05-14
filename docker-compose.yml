@@ -1,64 +1,6 @@
 version: '3.8'
 
 services:
-  postgres:
-    image: postgres:14
-    container_name: psql
-    restart: always
-    environment:
-      POSTGRES_USER: devuser
-      POSTGRES_PASSWORD: devpass
-      POSTGRES_DB: devdb
-    volumes:
-        - pgdata:/var/lib/postgresql/data
-    networks:
-        - devops-net
-    labels:
-      - "com.example.container_id=psql"
-      - "com.example.environment-development"
-      - "com.example.version=14"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"    
-
-  adminer:
-    image: adminer
-    container_name: adminer
-    restart: always
-    ports:
-      - "8080:8080"
-    networks:
-      - devops-net
-    labels:
-      - "com.example.container_id=adminer"
-      - "com.example.environment=development"
-      - "com.example.version=latest"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-
-  nginx:
-    image: nginx
-    container_name: nginx
-    restart: always
-    ports:
-      - "8081:80"
-    networks:
-      - devops-net
-    labels:
-      - "com.example.container_id=nginx"
-      - "com.example.environment=development"
-      - "com.example.version=latest"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-
   prometheus:
     image: prom/prometheus
     command:
@@ -71,11 +13,9 @@ services:
     ports:
       - "9090:9090"
     networks:
-      - devops-net
+      - monitoring-net
     labels:
       - "com.example.container_id=prometheus"
-      - "com.example.environment=development"
-      - "com.example.version=latest"
     restart: always
     logging:
       driver: "json-file"
@@ -90,11 +30,9 @@ services:
     ports:
       - "8082:8080"
     networks:
-      - devops-net
+      - monitoring-net
     labels:
       - "com.example.container_id=cadvisor"
-      - "com.example.environment=development"
-      - "com.example.version=latest"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
@@ -116,11 +54,10 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - devops-net
+      - monitoring-net
+      - cicd-net
     labels:
       - "com.example.container_id=grafana"
-      - "com.example.environment=development"
-      - "com.example.version=latest"
     restart: always
     volumes:
       - grafana_data:/var/lib/grafana
@@ -136,12 +73,12 @@ services:
     profiles:
       - stress-test
     networks:
-      - devops-net
+      - monitoring-net
 
 networks:
-  devops-net:
+  monitoring-net:
+  cicd-net:
     
 volumes:
-  pgdata:
   prometheus-data:
   grafana_data: 
